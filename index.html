@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Resume Analyzer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-purple-200 font-sans p-6">
+
+    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-6">
+        <h1 class="text-3xl font-bold mb-4 text-center text-blue-600">📄 Resume Analyzer</h1>
+
+        <form method="POST" enctype="multipart/form-data" class="mb-6">
+            <div class="flex flex-col items-center gap-4">
+                <input type="file" name="resume" accept=".pdf" class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600" required>
+                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Analyze Resume</button>
+            </div>
+        </form>
+
+        {% if score %}
+        <div class="bg-green-100 p-4 rounded-lg shadow mb-4">
+            <h2 class="text-xl font-semibold text-green-800">✅ ATS Score: {{ score }}/100</h2>
+        </div>
+
+        <div class="bg-yellow-100 p-4 rounded-lg shadow mb-6">
+            <h3 class="text-lg font-semibold text-yellow-800 mb-2">📌 Suggestions:</h3>
+            <ul class="list-disc pl-5 text-yellow-900">
+                {% for item in suggestions %}
+                    <li>{{ item }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+
+        {% if text %}
+        <div class="bg-gray-100 p-4 rounded-xl shadow">
+            <h3 class="text-lg font-semibold mb-2 text-gray-800">📝 Extracted Resume Text:</h3>
+            <div class="text-sm text-gray-700 whitespace-pre-wrap">{{ text }}</div>
+        </div>
+        {% endif %}
+
+        {% if grammar %}
+       <div class="bg-red-100 p-4 rounded-lg shadow mb-6">
+       <h3 class="text-lg font-semibold text-red-800 mb-2">🛠️ Grammar & Wording Suggestions:</h3>
+       <ul class="list-disc pl-5 text-red-900 text-sm">
+        {% for g in grammar %}
+            <li>{{ g }}</li>
+        {% endfor %}
+        </ul>
+        </div>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>
