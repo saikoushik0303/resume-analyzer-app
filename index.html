@@ -1,56 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Resume Analyzer</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Resume Analyzer</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body class="bg-purple-200 font-sans p-6">
+<body class="bg-gray-100 text-gray-900">
 
-    <div class="max-w-4xl mx-auto bg-white shadow-lg rounded-2xl p-6">
-        <h1 class="text-3xl font-bold mb-4 text-center text-blue-600">📄 Resume Analyzer</h1>
+  <div class="max-w-4xl mx-auto p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center text-indigo-600">📄 Resume Analyzer AI</h1>
 
-        <form method="POST" enctype="multipart/form-data" class="mb-6">
-            <div class="flex flex-col items-center gap-4">
-                <input type="file" name="resume" accept=".pdf" class="file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-blue-500 file:text-white hover:file:bg-blue-600" required>
-                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Analyze Resume</button>
-            </div>
-        </form>
+    <form method="POST" enctype="multipart/form-data" class="bg-white p-6 rounded shadow-md">
+      <div class="mb-4">
+        <label for="resume" class="block font-semibold mb-1">Upload Resume (PDF only)</label>
+        <input type="file" name="resume" accept=".pdf" required class="block w-full px-4 py-2 border rounded bg-gray-50">
+      </div>
 
-        {% if score %}
-        <div class="bg-green-100 p-4 rounded-lg shadow mb-4">
-            <h2 class="text-xl font-semibold text-green-800">✅ ATS Score: {{ score }}/100</h2>
-        </div>
+      <div class="mb-4">
+        <label for="job_description" class="block font-semibold mb-1">Job Description (Optional)</label>
+        <textarea name="job_description" rows="4" placeholder="Paste job description here..." class="block w-full px-4 py-2 border rounded bg-gray-50"></textarea>
+      </div>
 
-        <div class="bg-yellow-100 p-4 rounded-lg shadow mb-6">
-            <h3 class="text-lg font-semibold text-yellow-800 mb-2">📌 Suggestions:</h3>
-            <ul class="list-disc pl-5 text-yellow-900">
-                {% for item in suggestions %}
-                    <li>{{ item }}</li>
-                {% endfor %}
-            </ul>
-        </div>
-        {% endif %}
+      <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded w-full">Analyze Resume</button>
+    </form>
 
-        {% if text %}
-        <div class="bg-gray-100 p-4 rounded-xl shadow">
-            <h3 class="text-lg font-semibold mb-2 text-gray-800">📝 Extracted Resume Text:</h3>
-            <div class="text-sm text-gray-700 whitespace-pre-wrap">{{ text }}</div>
-        </div>
-        {% endif %}
-
-        {% if grammar %}
-       <div class="bg-red-100 p-4 rounded-lg shadow mb-6">
-       <h3 class="text-lg font-semibold text-red-800 mb-2">🛠️ Grammar & Wording Suggestions:</h3>
-       <ul class="list-disc pl-5 text-red-900 text-sm">
-        {% for g in grammar %}
-            <li>{{ g }}</li>
-        {% endfor %}
-        </ul>
-        </div>
-        {% endif %}
-
+    {% if text %}
+    <!-- Extracted Resume Text -->
+    <div class="mt-8 bg-white p-4 rounded shadow">
+      <h2 class="text-xl font-bold mb-2">📃 Extracted Resume Text</h2>
+      <p class="whitespace-pre-wrap text-sm text-gray-800">{{ text }}</p>
     </div>
+    {% endif %}
 
+    {% if score is not none %}
+    <!-- ATS Score Section -->
+    <div class="mt-6 bg-green-100 p-4 rounded shadow">
+      <h2 class="text-lg font-bold text-green-700">✅ ATS Score: {{ score }}%</h2>
+      <ul class="list-disc ml-6 text-sm mt-2">
+        {% for tip in suggestions %}
+          <li>{{ tip }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if grammar %}
+    <!-- Grammar Suggestions -->
+    <div class="mt-6 bg-yellow-100 p-4 rounded shadow">
+      <h2 class="text-lg font-bold text-yellow-800">🛠 Grammar Suggestions</h2>
+      <ul class="list-disc ml-6 text-sm mt-2">
+        {% for item in grammar %}
+          <li>{{ item }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+
+    {% if jd_match %}
+    <!-- JD Match Percentage -->
+    <div class="mt-6 bg-blue-100 p-4 rounded shadow">
+      <h2 class="text-lg font-bold text-blue-700">💼 Job Description Match</h2>
+      <p class="text-sm mt-2">Your resume matches <strong>{{ jd_match }}%</strong> with the provided job description.</p>
+    </div>
+    {% endif %}
+  </div>
 </body>
 </html>
