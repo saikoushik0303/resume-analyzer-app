@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex flex-col items-center justify-center p-8">
+  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-2xl text-center">
+    <h1 class="text-3xl font-bold text-blue-600 mb-6">Welcome, {{ user }}!</h1>
+
+    <div class="flex flex-col gap-4">
+      <a href="{{ url_for('ats_score') }}" class="bg-blue-500 hover:bg-blue-600 text-white py-3 rounded-xl font-semibold">ATS Score Checker</a>
+      <a href="{{ url_for('jd_matching') }}" class="bg-green-500 hover:bg-green-600 text-white py-3 rounded-xl font-semibold">JD Matching</a>
+      <a href="{{ url_for('resume_fix') }}" class="bg-purple-500 hover:bg-purple-600 text-white py-3 rounded-xl font-semibold">Resume Fix</a>
+      <a href="{{ url_for('logout') }}" class="bg-red-500 hover:bg-red-600 text-white py-3 rounded-xl font-semibold">Logout</a>
+    </div>
+  </div>
+</body>
+</html>

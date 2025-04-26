@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>JD Matching</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 flex justify-center items-center min-h-screen p-6">
+  <div class="bg-white p-8 rounded-2xl shadow-lg w-full max-w-lg">
+    <h2 class="text-2xl font-bold text-center text-green-600 mb-6">JD Matching</h2>
+
+    <form method="POST" enctype="multipart/form-data" class="flex flex-col gap-4">
+      <input type="file" name="resume" accept=".pdf" required class="p-2 border rounded-xl" />
+      <textarea name="job_description" rows="4" placeholder="Paste Job Description here..." required class="p-2 border rounded-xl"></textarea>
+      <button type="submit" class="bg-green-600 text-white py-2 rounded-xl hover:bg-green-700">Match Resume</button>
+    </form>
+
+    {% if jd_match %}
+      <div class="mt-6 bg-green-100 p-4 rounded-lg text-green-800 text-center font-semibold">
+        JD Match Score: {{ jd_match }}%
+      </div>
+    {% endif %}
+
+    <a href="{{ url_for('dashboard') }}" class="block mt-6 text-green-600 underline text-center">Back to Dashboard</a>
+  </div>
+</body>
+</html>
